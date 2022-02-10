@@ -34,7 +34,8 @@ function displayForecast(response) {
   let forecast = response.data.daily;
 
   let forecastElement = document.querySelector("#forecast");
-let forecastHTML = `<div class="row">`;
+
+  let forecastHTML = `<div class="row">`;
   forecast.forEach(function (forecastDay, index) {
     if (index < 6) {
       forecastHTML =
@@ -67,7 +68,7 @@ let forecastHTML = `<div class="row">`;
 }
 
 function getForecast(coordinates) {
-  let apiKey = "5f472b7acba333cd8a035ea85a0d4d4c";
+  let apiKey = "7d6bba9cbabe8ee37caa7093f2abd000";
   let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
   axios.get(apiUrl).then(displayForecast);
 }
@@ -97,6 +98,13 @@ function displayTemperature(response) {
 
   getForecast(response.data.coord);
 }
+
+function search(city) {
+  let apiKey = "7d6bba9cbabe8ee37caa7093f2abd000";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+  axios.get(apiUrl).then(displayTemperature);
+}
+
 function handleSubmit(event) {
   event.preventDefault();
   let cityInputElement = document.querySelector("#city-input");
@@ -107,15 +115,3 @@ let form = document.querySelector("#search-form");
 form.addEventListener("submit", handleSubmit);
 
 search("New York");
-
-function displayTemperature(response){
-   console.log(response.data.main.temp);
-   console.log(response.data);
-   let TemperatureElement = document.querySelector("#temperature");
-   let cityElement = document.querySelector("#city");
-   temperatureElement.innerHtml= math.round(response.data.main.temp);
-   cityElement.innerHtml = response.data.name;
-}
-let apikey ="7d6bba9cbabe8ee37caa7093f2abd000" ;
-let apiUrl =" https://api.openweathermap.org/data/2.5/weather?q=Newyork&appid={API key}&units=meteric";
-axios.get(apiUrl).then(displayTemperature);
